@@ -3,6 +3,13 @@ package com.example;
 public class ArbolGenerico<T> implements TDAArbolGenerico<T>{
     protected NodoGenerico<T> raiz;
 
+    public void insertar(T dato){
+        if(raiz==null){
+            NodoGenerico<T> nuevo = new NodoGenerico(dato);
+            this.raiz = nuevo;
+        }
+    }
+
     @Override
     public void insertar(T padre, T dato) {
         NodoGenerico<T> nodoPadre = buscar(padre);
