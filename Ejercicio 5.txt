@@ -1,0 +1,120 @@
+Buscar una palabra completa
+Recorre el Trie yendo caracter por caracter buscando que sea equivalente a uno de los siguientes nodos. En caso que se termine la lista de caracteres y el ultimo nodo es un fin de palabra la busqueda fue exitosa.
+
+Precondiciones: El trie tiene una raiz, la palabra es una string.
+Postcondiciones: Devuelve true si se encontro la palabra, false si falta algun caracter/no es el final y el trie queda intacto.
+
+Pseudocodigo
+función NodoTrie<T> buscarPalabra(palabra)
+	nodo actual <- raiz
+	para cada caracter c de palabra hacer
+		unHijo <- nodoActual.obtenerHijo(c)
+		si unHijo es nulo entonces
+			retornar nulo
+		sino
+			nodoActual <- unHijo
+		finSi
+	finPara
+	Si nodoActual.esFinDePalabra entonces
+		devolver nodoActual
+	sino
+		devolver nulo
+	FinSi
+finFuncion
+
+Mejor caso O(1), peor caso O(n)
+
+
+Buscar palabra por prefijo
+Recorro el trie hasta el ultimo caracter del prefijo y luego recorro todos los caminos posibles a partir de ese nodo almacenando las palabras completes.
+
+Precondiciones: El trie tiene raiz, el prefijo es una string.
+Postcondiciones: Devuelve la lista con todas las palabras que empiezan con el prefijo dado, el trie no se modifica.
+
+Pseudocodigo:
+función Lista<String> buscarPorPrefijo(raiz, prefijo)
+	nodoActual <- raiz
+	para cada carácter c de palabra hacer
+		unHijo <- nodoActual.obtenerHijo(c)
+		si unHijo es nulo entonces
+			retornar listaVacia
+		sino
+			nodoActual <- unHijo
+		finSi
+	finPara
+	resultados <- nueva Lista<String>
+	palabras(nodoActual, prefijo, resultados)
+	retornar resultados
+finFuncion
+
+función palabras(nodoActual, palabraActual, resultados)
+	si nodoActual.esFinDePalabra entonces
+		resultados.agregar(palabraActual)
+	finSi
+	para cada carácter c de nodoActual.obtenerHijos() hacer
+		unHijo <- nodoActual.obtenerHijos(c)
+		palabras(unHijo, palabraActual + c, resultados)
+	finPara
+finFuncion
+
+Mejor caso O(n) longitud de prefijo, peor caso O(n + s) s = longitud de todas las palabras con ese prefijo
+
+
+Insertar una palabra con un dato asociado
+Recorre y crea nodos para cada carácter. Al llegar al final marca el siguiente nodo como fin de palabra y le asocia el dato. Si la palabra ya existía, actualiza el dato.
+
+Precondiciones: el trie tiene una raíz, palabra no es nula y dato es un valor.
+Postcondiciones: existe la palabra en el trie con el dato asociado, insertando los nodos que faltaban y reemplazando el dato en caso de haber existido previamente.
+
+Pseudocodigo:
+función void insertar(palabra, dato)
+	nodoActual <- raíz
+	para cada carácter c de palabra hacer
+		unHijo <- nodoActual.obtenerHijo(c)
+		si unHijo es nulo entonces
+			unHIjo <- nuevo NodoTrie<T>()
+			nodoACtual.agregar(unHijo, c)
+		finSi
+		nodoActual <- unHijo
+	finPara
+	nodoActual.esFinDePalabra <- verdadero
+	nodoActual.dato <- dato
+finFuncion
+
+Mejor y peor caso O(n) ya que tendrá que recorrer los caracteres de la palabra siempre.
+
+
+Eliminar palabra
+Recorre hasta el nodo final de la palabra y al volver desmarca el fin de palabra y va eliminando los nodos huérfanos (que no tengan hijos ni sean fin de otra palabra)
+
+Precondiciones: el trie tiene raíz, palabra es una string.
+Postcondiciones: se eliminaron los nodos que constituyan a esa palabra y solo a esa palabra. Los nodos compartidos quedan intactos.
+
+Pseudocodigo:
+void eliminar(palabra)
+    eliminarRec(raiz, palabra, 0)
+
+booleano eliminarRec(nodoActual, palabra, indice)
+    si nodoActual es nulo entonces
+        retornar falso   
+    finSi
+    si indice = longitud(palabra) entonces // Ya llego al final en teoria
+        si nodoActual.esFinDePalabra entonces // si es final de palabra
+            nodoActual.esFinDePalabra <- falso 
+            nodoActual.dato <- nulo // lo elimina basicamente
+            retornar nodoActual.obtenerHijos().estaVacio() // Si es prefijo de otras devuelve falso y no se puede eliminar, si no si
+        sino
+            retornar falso   // no era fin de palabra
+        finSi
+    finSi
+    c <- palabra[indice] // Agarras el proximo caracter
+    unHijo <- nodoActual.obtenerHijo(c)
+    puedeEliminar <- eliminarRec(unHijo, palabra, indice + 1) // Te fijas si lo podes eliminar (índice mas uno xq es el proximo carácter)
+    si puedeEliminar entonces
+        nodoActual.eliminarHijo(c)   // borrar enlace al nodo 
+        retornar !nodoActual.esFinDePalabra Y nodoActual.obtenerHijos().estaVacio() // Si es fin de palabra no se puede eliminar y si tiene hijos tampoco
+    sino
+        retornar falso   
+    finSi
+
+Mejor caso y peor caso O(n) siempre se recorre la longitud de la palabra
