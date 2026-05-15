@@ -9,7 +9,8 @@ public class AGenealogico extends ArbolGenerico<Persona> {
         if (this.raiz==null){
             return null;
         }
-        NodoGenerico<Persona> ancestro = buscar(new Persona(0, nombre));
+        Persona parametro = new Persona(0,nombre);
+        NodoGenerico<Persona> ancestro = buscar(parametro);
         if (ancestro == null) return null;
         listarDescendientes(ancestro.getPrimerHijo(), devolver);
         return devolver;

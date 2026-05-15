@@ -15,8 +15,16 @@ public class Persona {
     public String getNombre() {
         return nombre;
     }
-    
-    public boolean equals(Persona otro){
-        return nombre.toLowerCase()==otro.getNombre().toLowerCase();
+
+    public boolean equals(Object obj){
+        if (this==obj){return true;}
+        if(!(obj instanceof Persona)){return false;}
+        Persona otro = (Persona) obj;
+        return nombre.toLowerCase().equals(otro.getNombre().toLowerCase());
+    }
+
+    @Override
+    public String toString(){
+        return this.nombre;
     }
 }
