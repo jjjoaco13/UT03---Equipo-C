@@ -1,6 +1,7 @@
 package ucu.edu.aed.medible;
 
 import ucu.edu.aed.tda.trie.Entry;
+import ucu.edu.aed.tda.trie.TDALista;
 import ucu.edu.aed.tda.trie.TtrieHashMap;
 
 public class Main {
@@ -27,7 +28,12 @@ System.out.println(
         trie2.buscarPatron("ana")
 );
 System.out.println("---..--\nAUTOCOMPLETAR:---..--");
-for (Entry<String> e : trie.predecir("cas")) {
+TDALista<Entry<String>> lista = trie.predecir("cas");
+
+for (int i = 0; i < lista.tamaño(); i++) {
+
+    Entry<String> e = lista.obtener(i);
+
     System.out.println(e.getPalabra());
 }
     }

@@ -1,6 +1,5 @@
 package ucu.edu.aed.tda.trie;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class TtrieHashMap<T> {
@@ -27,7 +26,7 @@ public void insertarSufijos(String texto) {
 public TListaEnlazada<Integer> buscarPatron(String patron) {
     return raiz.buscarPatron(patron);
 }
-public List<Entry<T>> predecir(String prefijo) {
+public TDALista<Entry<T>> predecir(String prefijo) {
     return raiz.predecir(prefijo);
 }
 

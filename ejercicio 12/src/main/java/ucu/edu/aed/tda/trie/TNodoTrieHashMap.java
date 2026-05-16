@@ -2,7 +2,6 @@ package ucu.edu.aed.tda.trie;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -97,9 +96,9 @@ public TListaEnlazada<Integer> buscarPatron(String patron) {
     }
 
     @Override
-    public List<Entry<T>> predecir(String prefijo) {
+    public TDALista<Entry<T>> predecir(String prefijo) {
 
-        List<Entry<T>> resultado = new ArrayList<>();
+        TDALista<Entry<T>> resultado = new TListaEnlazada<>();
 
         TNodoTrieHashMap<T> nodo = this;
 
@@ -119,10 +118,10 @@ public TListaEnlazada<Integer> buscarPatron(String patron) {
    
     private void predecirRecursivo(
             String palabraActual,
-            List<Entry<T>> resultado) {
+            TDALista<Entry<T>> resultado) {
 
         if (this.esPalabra) {
-            resultado.add(new Entry<>(dato, esPalabra, palabraActual));
+            resultado.agregar(new Entry<>(dato, esPalabra, palabraActual));
         }
 
         for (Map.Entry<Character, TNodoTrieHashMap<T>> entry : hijos.entrySet()) {

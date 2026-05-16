@@ -23,7 +23,7 @@ public interface TNodoTrie<T> {
     /**
      * retorna todas las palabras en el trie que comienzan con prefijo
      */
-    List<Entry<T>> predecir(String prefijo);
+    TDALista<Entry<T>> predecir(String prefijo);
 
     /**
      * retorna un dato cuando el nodo es palabra, nulo en otro caso
