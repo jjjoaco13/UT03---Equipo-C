@@ -1,0 +1,235 @@
+Claves: 45, 12, 37, 82, 29, 54, 32, 76, 18, 93, 11, 68
+
+Tabla: tamaño M = 17
+
+M = 17 porque es un numero primo mayor que la cantidad de claves a insertar. 
+El factor de carga queda: 
+a = 12 / 17
+a = 0,71 aprox
+De esta forma la tabla no queda llena del todo y se puede analizar el comportamiento de las coliciones sin que la tabla se sature.
+
+
+Funcion de hash: h(k) = k mod 17
+
+Tabla de valores iniciales:
+
+Clave | h(k)
+------|------
+45    | 11
+12    | 12
+37    | 3
+82    | 14
+29    | 12
+54    | 3
+31    | 14
+76    | 8
+18    | 1
+93    | 8
+11    | 11
+68    | 0
+
+
+Sondeo lineal:
+h_i(k) = (h(k) + i) mod 17
+
+Estado final:
+
+Posición | Clave
+---------|------
+0        | 68
+1        | 1
+2        | /
+3        | 37
+4        | 54
+5        | /
+6        | /
+7        | /
+8        | 76
+9        | 93
+10       | /
+11       | 45
+12       | 12
+13       | 29
+14       | 82
+15       | 31
+16       | 11
+
+Clave | h(k) |Posición final | Comparaciones
+------|------|---------------|--------------
+45    | 11   | 11            | 1
+12    | 12   | 12            | 1
+37    | 3    | 3             | 1
+82    | 14   | 14            | 1
+29    | 12   | 13            | 2
+54    | 3    | 4             | 2
+31    | 14   | 15            | 2
+76    | 8    | 8             | 1
+18    | 1    | 1             | 1
+93    | 8    | 9             | 2
+11    | 11   | 16            | 6
+68    | 0    | 0             | 1
+
+Total de coliciones = 9
+
+Promedio de comparaciones para búsquedas exitosas:
+Total comparaciones = 21
+Promedio = 21/12 = 1,75
+
+Busquedas no exitosas:
+17, 35, 20, 25, 28, 46, 65
+
+Clave | h(k) | Comparaciones
+------|------|--------------
+17    | 0    | 2
+35    | 1    | 1
+20    | 3    | 2
+25    | 8    | 2
+28    | 11   | 8
+46    | 12   | 7
+65    | 14   | 5
+
+Total comparaciones no exitosas = 27
+Promedio = 27 / 7 = 3,86 aprox
+
+
+
+
+
+Sondeo cuadratico:
+h_i(k) = (h(k) + i^2) mod 17
+
+Estado final:
+Posición | Clave
+---------|------
+0        | 68
+1        | 18
+2        | /
+3        | 3
+4        | 54
+5        | /
+6        | /
+7        | /
+8        | 76
+9        | 93
+10       | 11
+11       | 45
+12       | 12
+13       | 29
+14       | 82
+15       | 31
+16       | /
+
+
+Clave | h(k) | Posición final | Comparaciones
+------|------|----------------|--------------
+45    | 11   | 11             | 1
+12    | 12   | 12             | 1
+37    | 3    | 3              | 1
+82    | 14   | 14             | 1
+29    | 12   | 13             | 2
+54    | 3    | 4              | 2
+31    | 14   | 15             | 2
+76    | 8    | 8              | 1
+18    | 1    | 1              | 1
+93    | 8    | 9              | 2
+11    | 11   | 10             | 5
+68    | 0    | 0              | 1
+
+Total colisiones = 8
+
+Promedio de comparaciones para busquedas exitosas = 20/12 = 1,67 aprox
+
+Busquedas no exitosas:
+17, 35, 20, 25, 28, 46, 65
+
+Clave buscada | h(k) | Comparaciones
+--------------|------|--------------
+17            | 0    | 4
+35            | 1    | 1
+20            | 3    | 2
+25            | 8    | 4
+28            | 11   | 5
+46            | 12   | 2
+65            | 14   | 3
+
+Total de comparaciones no exitosas = 21
+promedio = 21/7 = 3
+
+
+
+Encadenamiento separado:
+
+h(k) = h(mod 17)
+
+Estado final:
+
+Posición | Lista de claves
+---------|----------------
+0        | 68
+1        | 18
+2        | /
+3        | 37 -> 54
+4        | /
+5        | /
+6        | /
+7        | /
+8        | 76 -> 93
+9        | /
+10       | /
+11       | 45 -> 11
+12       | 12 -> 29
+13       | /
+14       | 82 -> 31
+15       | /
+16       | /
+
+total colsiones = 5
+
+Promedio de comparaciones para búsquedas exitosas:
+Clave | h(k) | Comparaciones
+------|------|--------------
+45    | 11   | 1
+12    | 12   | 1
+37    | 3    | 1
+82    | 14   | 1
+29    | 12   | 2
+54    | 3    | 2
+31    | 14   | 2
+76    | 8    | 1
+18    | 1    | 1
+93    | 8    | 2
+11    | 11   | 2
+68    | 0    | 1
+
+total de comparaciones = 17
+promedio = 17/12 = 1,42 aprox
+
+Busquedas no exitosas:
+17, 35, 20, 25, 28, 46, 65
+
+Clave buscada | h(k) | Comparaciones
+--------------|------|--------------
+17            | 0    | 1
+35            | 1    | 1
+20            | 3    | 2
+25            | 8    | 2
+28            | 11   | 2
+46            | 12   | 2
+65            | 14   | 2
+
+total de comparaciones no exitosas = 12
+promedio = 12/7 = 1,71 aprox
+
+
+
+
+Comparacion:
+
+Estrategia              | Colisiones | Promedio exitosas | Promedio no exitosas
+------------------------|------------|-------------------|---------------------
+Sondeo lineal           | 9          | 1,75              | 3,86
+Sondeo cuadrático       | 8          | 1,67              | 3,00
+Encadenamiento separado | 5          | 1,42              | 1,71
+
+La estrategia que mejor funcionó fue el encadenamiento separado, porque tuvo la menor cantidad de coliciones y
+el menor promedio de comparaciones de busquedas tanto exitosas como no exitosas.
