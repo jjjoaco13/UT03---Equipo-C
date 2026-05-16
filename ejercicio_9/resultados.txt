@@ -1,0 +1,24 @@
+Factor de carga % | Prom.Comp. Inserción | Prom. Comp. Búsqueda existosa | Prom. Comp. Búsqueda no existosa
+------------------|----------------------|-------------------------------|---------------------------------
+70%               | 2.49                 | 2.49                          | 7.69
+75%               | 2.456                | 2.456                         | 8.133333333333333
+80%               | 2.9                  | 2.9                           | 12.79
+85%               | 3.523529411764706    | 3.523529411764706             | 16.915294117647058
+90%               | 3.9411111111111112   | 3.9411111111111112            | 24.553333333333335
+91%               | 4.193406593406594    | 4.193406593406594             | 40.34065934065934
+92%               | 6.398913043478261    | 6.398913043478261             | 46.04673913043478
+93%               | 5.902150537634409    | 5.902150537634409             | 52.204301075268816
+94%               | 10.186170212765957   | 10.186170212765957            | 101.13085106382978
+95%               | 5.134736842105263    | 5.134736842105263             | 49.03263157894737
+96%               | 5.604166666666667    | 5.604166666666667             | 70.890625
+97%               | 8.893814432989691    | 8.893814432989691             | 119.34948453608247
+98%               | 13.784693877551021   | 13.784693877551021            | 206.0326530612245
+99%               | 31.666666666666668   | 31.666666666666668            | 364.6111111111111
+
+¿Se condicen estos resultados con los conceptos vistos en forma teórica?
+
+Sí, coincide con que cuando el factor de carga se acerca a 1, el rendimiento de la tabla hash con
+sondeo lineal empeora, porque mientras que aumenta el factor de carga, aumentan las comparaciones promedio.
+Esto pasa porque la tabla se llena cada vez mas y hay más colisiones. Se nota sobre todo en
+las busquedas no exitosas, en donde al no encontrar la clave el algoritmo tiene que seguir recorriendo
+posiciones hasta encontrar una celda vacía.
